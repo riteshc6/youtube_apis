@@ -1,6 +1,7 @@
 from http_client import session
 from .exceptions import ExternalAPIError
 
+
 async def _fetch(method: str, url: str, **kwargs):
     """
     Fetches the given url using the method and
@@ -12,12 +13,12 @@ async def _fetch(method: str, url: str, **kwargs):
         The HTTP method to use when requesting the resource
     url: str
         The URL for the resource
-    
+
     Returns
     -------
     dict
         The response data dictionary
-    
+
     Raises
     ------
     ExternalAPIError

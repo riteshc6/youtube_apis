@@ -7,6 +7,7 @@ from starlette.middleware.cors import CORSMiddleware
 
 from fastapi import FastAPI
 from config import settings
+from utils import update_query_results
 
 
 def _setup_logger(log_config):
@@ -70,7 +71,7 @@ def setup_application(
         )
         sub_app.include_router(app.router)
         application.mount(app.prefix, sub_app)
-    
+    application.add_event_handler("startup", update_query_results)
     # logger = logging.getLogger('youtube_apis')
     # logger.debug("Application Instantiated")
 

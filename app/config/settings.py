@@ -14,4 +14,5 @@ VERSION = ("1", "0", "0")
 
 
 # Add application specific settings here.
-
+BASE_URL = env.str("BASEURL")
+APIKEY = env.str("APIKEY")
