@@ -1,0 +1,7 @@
+fastapi==0.63.0
+uvicorn==0.13.3
+gunicorn~=20.0
+environs~=8.0
+
+# Dev Dependencies
+pylint~=2.5
