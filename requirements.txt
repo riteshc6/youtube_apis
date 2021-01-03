@@ -1,7 +1,8 @@
-fastapi==0.63.0
-uvicorn==0.13.3
-gunicorn~=20.0
+aiohttp~=3.6
 environs~=8.0
+fastapi==0.63.0
+gunicorn~=20.0
+uvicorn==0.13.3
 
 # Dev Dependencies
 pylint~=2.5
