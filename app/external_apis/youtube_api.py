@@ -19,7 +19,7 @@ class Youtube:
     def _get_url(self, path):
         return f"{self.BASE_URL}{path}"
 
-    async def search(self, q: str, part: list, type_: str, max_results: int):
+    async def search(self, q: str, part: list, type_: str, max_results: int, published_after: str):
         try:
             response = await http.get(
                 self._get_url("/youtube/v3/search"),
@@ -28,7 +28,8 @@ class Youtube:
                     "part": ",".join(part),
                     "type": type_,
                     "maxResults": max_results,
-                    "key": self.KEY
+                    "key": self.KEY,
+                    "published_after": published_after
                 }
             )
             return response

@@ -4,10 +4,12 @@ from typing import List
 from typing import Tuple
 
 from starlette.middleware.cors import CORSMiddleware
-
 from fastapi import FastAPI
+
 from config import settings
-from utils import update_query_results
+from utils import add_new_videos
+from http_client import close_session
+from database.es_utils import create_index, connect_to_es, close_es_connection
 
 
 def _setup_logger(log_config):
@@ -71,7 +73,12 @@ def setup_application(
         )
         sub_app.include_router(app.router)
         application.mount(app.prefix, sub_app)
-    application.add_event_handler("startup", update_query_results)
+    
+    application.add_event_handler("startup", add_new_videos)
+    application.add_event_handler("startup", connect_to_es)
+    application.add_event_handler("startup", create_index)
+    application.add_event_handler("shutdown", close_session)
+    application.add_event_handler("shutdown", close_es_connection)
     # logger = logging.getLogger('youtube_apis')
     # logger.debug("Application Instantiated")
 

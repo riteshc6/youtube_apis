@@ -1,14 +1,20 @@
+from datetime import datetime, timedelta
+
+from config import settings
 from external_apis.youtube_api import instance as youtube
 from fastapi_utils.tasks import repeat_every
+from database.es import get_database
 
 
-@repeat_every(seconds=30)
-async def update_query_results(q: str = "cricket", max_results: int = 10):
+@repeat_every(seconds=settings.PERIOD)
+async def add_new_videos(q: str = "cricket", max_results: int = 10):
     """
         Fetch query results and update db
     """
-    response = await youtube.search(q=q, part=["snippet"], type_="video", max_results=max_results)
-    videos = []
+    t = datetime.utcnow() - timedelta(seconds=settings.PERIOD)
+    published_after = t.isoformat("T") + "Z"
+    response = await youtube.search(q=q, part=["snippet"], type_="video", max_results=max_results, published_after=published_after)
+    es = await get_database()
     for item in response["items"]:
         snippet = item["snippet"]
         video = {
@@ -17,7 +23,8 @@ async def update_query_results(q: str = "cricket", max_results: int = 10):
             "description": snippet["description"],
             "published_at": snippet["publishedAt"],
             "url": "https://www.youtube.com/watch?v=" + item["id"]["videoId"],
+            "query": q
         }
-        videos.append(video)
+        await es.index(index=settings.ES_INDEX, id=item["id"]["videoId"], body=video)
 
-    print("db updated")
+    print("New Videos Added to DB")

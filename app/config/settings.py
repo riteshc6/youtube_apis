@@ -16,3 +16,7 @@ VERSION = ("1", "0", "0")
 # Add application specific settings here.
 BASE_URL = env.str("BASEURL")
 APIKEY = env.str("APIKEY")
+ES_HOSTS = env.str("ES_HOSTS")
+ES_INDEX = "video"
+
+PERIOD = 30
