@@ -25,27 +25,28 @@ App to periodically fetch youtube videos and serve through api
     pip intall -r requirements.txt
     ```
 
-4. Run the development web server
+4. Install  and run elasticsearch locally https://www.elastic.co/guide/en/elasticsearch/reference/current/deb.html
+
+5. Setup Enivronment Variables APIKEY, BASEURL, ES_HOSTS
+
+6. Run the development web server
     ```bash
-    python manage.py runserver
+        uvicorn app.main:app --reload
+    ```
+## Deploy Using Docker
+
+1. Install  and run elasticsearch locally https://www.elastic.co/guide/en/elasticsearch/reference/current/deb.html
+
+2. Run Deployment script
+    ``` bash
+        sudo bash deploy.sh
     ```
 
-
-# Setup project using docker
-
-1. Create Docker image
-    ```sh
-    $ sudo docker build -t yourimagename .
-    ```
-2. Run Docker Container
-    ```sh
-    $ sudo docker run -v "$(pwd)"/logs/:/youtube_apis/logs -it --name yourcontainername -p 8000:8000 yourimagename
-    ```
 # And then open it at browser
    http://127.0.0.1:8000/
 
 # Check swagger Api's
    http://127.0.0.1:8000/api/v1/docs
 
-# Check Swagger Documentation
+# Check ReDoc Documentation
    http://127.0.0.1:8000/api/v1/redoc
