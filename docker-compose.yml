@@ -1,0 +1,19 @@
+version: "3.4"
+services:
+    dsp_kg_flow_api:
+        build:
+            context: ./
+        image: "youtube_apis:production-build"
+        ports:
+          - 8000:8000
+        depends_on:
+            - "elastic_service"
+        restart: "unless-stopped"
+    elastic_service:
+        image: docker.elastic.co/elasticsearch/elasticsearch:7.10.0
+        environment:
+            - discovery.type=single-node
+        ports:
+            - 9200:9200
+            - 9300:9300
+        restart: "unless-stopped"

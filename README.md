@@ -2,6 +2,18 @@
 
 App to periodically fetch youtube videos and serve through api
 
+## Quickstart
+1. Install docker-compose https://docs.docker.com/compose/install/
+2. Add .env file in root directory with variables APIKEY, BASEURL, ES_HOSTS
+3. Run docker-compose
+    ```bash
+        sudo docker-compose up -d
+    ```
+4. Stop docker-compose
+    ```bash
+        sudo docker-compose down
+    ```
+
 ## Setting up
 
 1. Create a virtual environment
